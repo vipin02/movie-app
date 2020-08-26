@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <span class="navbar-brand" routerLink="/">Movie App</span>
+  <button
+    *ngIf="!authenticated"
+    type="button"
+    class="btn btn-primary"
+    style="position: absolute; right: 30px;"
+    (click)="login()"
+  >
+    Login
+  </button>
+  <button
+    *ngIf="authenticated"
+    type="button"
+    class="btn btn-danger"
+    style="position: absolute; right: 30px;"
+    (click)="logout()"
+  >
+    Logout
+  </button>
+</nav>

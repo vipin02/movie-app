@@ -1,0 +1,102 @@
+<div class="movielist-wrapper text-center">
+  <form [formGroup]="form" class="row">
+    <div class="input-group mb-3 col-md-3 offset-md-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search by name & director of movie"
+        formControlName="searchValue"
+      />
+      <div class="input-group-append">
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          (click)="searchMovie()"
+        >
+          Search
+        </button>
+      </div>
+    </div>
+    <div class="input-group mb-3 col-md-3">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="inputGroupSelect01">Sort By</label>
+      </div>
+      <select
+        class="custom-select"
+        id="inputGroupSelect01"
+        formControlName="sortBy"
+        (change)="onSortChange()"
+      >
+        <option value="name">Name</option>
+        <option value="director">Director</option>
+        <option value="99popularity">Popularity</option>
+      </select>
+      <button
+        class="btn btn-outline-secondary"
+        type="button"
+        (click)="clear()"
+        style="margin: 0 10px;"
+      >
+        Clear
+      </button>
+    </div>
+    <button
+      *ngIf="isAdmin"
+      class="btn btn-outline-primary"
+      type="button"
+      (click)="addMovie()"
+      style="margin: 0 10px;"
+    >
+      Add Movie
+    </button>
+  </form>
+  <div>
+    <span
+      *ngFor="let genre of genres"
+      class="badge"
+      [ngClass]="[selectedGenre[genre] ? 'badge-primary' : 'badge-secondary']"
+      (click)="toggleGenre(genre)"
+      >{{ genre }}</span
+    >
+  </div>
+  <div
+    *ngFor="let movie of movies"
+    class="card"
+    style="width: 20%; display: inline-block; height: auto; margin: 10px;"
+  >
+    <div class="card-body">
+      <h5 class="card-title">{{ movie.name }}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">
+        Directed By {{ movie.director }}
+        <span style="float: right; margin-right: 20px; color: red;">{{
+          movie["99popularity"]
+        }}</span>
+      </h6>
+      <h6
+        *ngIf="isAdmin && movie['updatedBy']"
+        class="card-subtitle mb-2 text-muted"
+      >
+        Last Updatded By
+        <span style="color: red;">{{ movie["updatedBy"] }}</span>
+      </h6>
+      <button
+        *ngIf="isAdmin"
+        class="btn btn-outline-warning"
+        type="button"
+        (click)="editMovie(movie)"
+        style="float: left; margin: 10px 0;"
+      >
+        Edit
+      </button>
+      <button
+        *ngIf="isAdmin"
+        class="btn btn-outline-danger"
+        type="button"
+        (click)="deleteMovie(movie.name)"
+        style="float: right; margin: 10px 0;"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
